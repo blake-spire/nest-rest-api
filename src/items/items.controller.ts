@@ -28,30 +28,30 @@ export class ItemsController {
    */
 
   @Get()
-  findAll(): Item[] {
+  findAll(): Promise<Item[]> {
     return this.itemsService.findAll();
   }
 
   // example of accessing param
   @Get(':id')
-  findOne(@Param('id') id): Item {
+  findOne(@Param('id') id): Promise<Item> {
     return this.itemsService.findOne(id);
   }
 
   // example of using data tranfer object (imported)
   @Post()
-  create(@Body() createItemDto: CreateItemDto): string {
-    return `Name: ${createItemDto.name} Desc: ${createItemDto.description}`;
+  create(@Body() createItemDto: CreateItemDto): Promise<Item> {
+    return this.itemsService.create(createItemDto);
   }
 
   // example of delete
   @Delete(':id')
-  delete(@Param('id') id): string {
-    return `Deleted: ${id}`;
+  delete(@Param('id') id): Promise<Item> {
+    return this.itemsService.delete(id);
   }
 
   @Put(':id')
-  update(@Body() updateItemDto: CreateItemDto, @Param('id') id): string {
-    return `Updated ${id} - Name ${updateItemDto.name}`;
+  update(@Body() updateItemDto: CreateItemDto, @Param('id') id): Promise<Item> {
+    return this.itemsService.update(id, updateItemDto);
   }
 }
